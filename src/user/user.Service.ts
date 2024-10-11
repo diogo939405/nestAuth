@@ -7,6 +7,10 @@ import { hashSync } from 'bcrypt';
 
 @Injectable()
 export class UserService {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    validate(nome: string, senha: string): any {
+        throw new Error('Method not implemented.');
+    }
     constructor(
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
@@ -21,11 +25,11 @@ export class UserService {
   
   }
 
-  async getUser(id:number):Promise<User>{
+  async getUser( id: number):Promise<User>{
     return this.userRepository.findOne({where:{id:id}})
   }
 
-  async createUser(user: User): Promise<User> {
+  async createUser( user: User): Promise<User> {
     user.senha = hashSync(user.senha, 10);  // Verifique se a senha é string aqui
     console.log("Hashed senha:", user.senha);  // Exibe a senha criptografada
     return this.userRepository.save(user);
@@ -34,4 +38,9 @@ export class UserService {
   async deleteUser(id: number): Promise<void> {
     await this.userRepository.delete(id);
   }
+
+    async findUserByName(nome: string): Promise<User> {
+        // Busca o usuário pelo nome
+        return await this.userRepository.findOne({ where: { nome: nome } });
+    }
 }

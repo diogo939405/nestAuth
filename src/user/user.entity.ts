@@ -10,6 +10,7 @@ export class User {
 
    @Column({ length: 255 })
   senha: string;
+  
 
   // @BeforeInsert()
   // hashSenha() {
